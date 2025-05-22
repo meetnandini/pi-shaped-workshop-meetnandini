@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: flask-hello-world
+
+  labels:
+
+    app: flask-hello-world
+
+spec:
+
+  replicas: 1
+
+  selector:
+
+    matchLabels:
+
+      app: flask-hello-world
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: flask-hello-world
+
+    spec:
+
+      containers:
+
+      - name: flask-hello-world
+
+        image: meetnandini/flask-hello-world:day1
+
+        ports:
+
+        - containerPort: 8080
+
+        resources:
+
+          requests:
+
+            memory: "64Mi"
+
+            cpu: "250m"
+
+          limits:
+
+            memory: "128Mi"
+
+            cpu: "500m"
+
+      affinity:
+
+        nodeAffinity:
+
+          requiredDuringSchedulingIgnoredDuringExecution:
+
+            nodeSelectorTerms:
+
+            - matchExpressions:
+
+              - key: node-type
+
+                operator: In
+
+                values:
+
+                - workshop-node
+
+      tolerations:
+
+      - key: "workshop"
+
+        operator: "Equal"
+
+        value: "true"
+
+        effect: "NoSchedule"
+ 
