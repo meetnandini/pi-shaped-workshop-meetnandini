@@ -1,0 +1,17 @@
+# node-affinity.yaml
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-type
+          operator: In 
+          values:
+            - workshop-node
+
+tolerations:
+  - key: "workshop"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
